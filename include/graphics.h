@@ -2768,6 +2768,7 @@ extern const u32 gTMCaseDisc_Gfx[];
 extern const u32 gTMCaseDiscTypes1_Pal[];
 extern const u32 gTMCaseDiscTypes2_Pal[];
 extern const u8 gTMCaseHM_Gfx[];
+extern const u8 gTMCaseTM_Gfx[];
 
 extern const u16 gStandardMenuPalette[];
 

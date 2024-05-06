@@ -3153,7 +3153,7 @@ u8 IsMonDisobedient(void)
 
     if (IsBattlerModernFatefulEncounter(gBattlerAttacker)) // only false if illegal Mew or Deoxys
     {
-        if (!IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))
+        if (!IsOtherTrainer(gBattleMons[gBattlerAttacker].otId))
             return 0;
         if (FlagGet(FLAG_BADGE08_GET))
             return 0;

@@ -504,6 +504,7 @@ extern const u8 gText_SaveFileCorrupted[];
 extern const u8 gText_SaveFileHasBeenDeleted[];
 extern const u8 gText_1MSubCircuitBoardNotInstalled[];
 extern const u8 gText_NewGame[];
+extern const u8 gText_NewGamePlus[];
 extern const u8 gText_Continue[];
 extern const u8 gText_MysteryGift[];
 extern const u8 gText_WirelessNotConnected[];
@@ -959,6 +960,7 @@ extern const u8 gText_InBagVar1[];
 extern const u8 gText_Var1AndYouWantedVar2[];
 extern const u8 gText_HereYouGoThankYou[];
 extern const u8 gText_NoMoreRoomForThis[];
+extern const u8 gText_YouAlreadyHaveThis[];
 
 // pokedex_screen
 extern const u8 gText_PokedexTableOfContents[];
@@ -1544,5 +1546,18 @@ extern const u8 gText_PokeSum_EggOrigin_Trade[];
 extern const u8 gText_PokeSum_EggOrigin_NicePlace[];
 extern const u8 gText_PokeSum_EggOrigin_Spa[];
 extern const u8 gText_PokeSum_EggOrigin_Trade[];
+
+// Evolve in party screen option
+extern const u8 gText_Evolve[];
+
+// Move Item
+extern const u8 gText_Move[];
+extern const u8 gText_MoveItemWhere[];
+extern const u8 gText_XsYAnd[];
+extern const u8 gText_XsYWereSwapped[];
+
+extern const u8 gText_YouCantUseThisYet[];
+
+extern const u8 gText_SoldOut[];
 
 #endif //GUARD_STRINGS_H

@@ -3222,6 +3222,13 @@ static void Cmd_getexp(void)
 
                 if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP))
                 {
+					u16 leveldiff;
+
+					leveldiff = (gBattleMons[gBattlerFainted].level) - (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL));
+					
+					if (leveldiff > 10)
+						leveldiff = 10;
+					
                     if (gBattleStruct->sentInPokes & 1)
                         gBattleMoveDamage = *exp;
                     else
@@ -3229,12 +3236,22 @@ static void Cmd_getexp(void)
 
                     if (holdEffect == HOLD_EFFECT_EXP_SHARE)
                         gBattleMoveDamage += gExpShareExp;
+					
+					if ((GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL)) < (gBattleMons[gBattlerFainted].level))
+                        gBattleMoveDamage = (gBattleMoveDamage * leveldiff);
+					
+					if ((GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL)) >= (gBattleMons[gBattlerFainted].level))
+                        gBattleMoveDamage = (gBattleMoveDamage / 2);
+					
                     if (holdEffect == HOLD_EFFECT_LUCKY_EGG)
-                        gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
+                        gBattleMoveDamage = (gBattleMoveDamage * 10);
+					
                     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                         gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
+					
                     if (IsTradedMon(&gPlayerParty[gBattleStruct->expGetterMonId])
                      && !(gBattleTypeFlags & BATTLE_TYPE_POKEDUDE))
+				 
                     {
                         gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
                         i = STRINGID_ABOOSTED;
@@ -5207,13 +5224,6 @@ static void Cmd_yesnoboxlearnmove(void)
             {
                 u16 moveId = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MOVE1 + movePosition);
                 
-                if (IsHMMove2(moveId))
-                {
-                    PrepareStringBattle(STRINGID_HMMOVESCANTBEFORGOTTEN, gActiveBattler);
-                    gBattleScripting.learnMoveState = 5;
-                }
-                else
-                {
                     gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
 
                     PREPARE_MOVE_BUFFER(gBattleTextBuff2, moveId)
@@ -5233,7 +5243,6 @@ static void Cmd_yesnoboxlearnmove(void)
                         RemoveBattleMonPPBonus(&gBattleMons[2], movePosition);
                         SetBattleMonMoveSlot(&gBattleMons[2], gMoveToLearn, movePosition);
                     }
-                }
             }
         }
         break;

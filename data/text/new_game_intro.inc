@@ -154,6 +154,11 @@ gControlsGuide_Text_LRButtons::
     .string "game, or on how to do things,\n"
     .string "press the L or R Button.$"
 
+gText_NewGamePlus_Intro::
+	.string "Welcome to NEW GAME PLUS!\n"
+	.string "In this mode you can restart your\n"
+	.string "game while keeping most of your progress.$"
+
 gOakSpeech_Text_AskPlayerGender::
     .string "Now tell me. Are you a boy?\n"
     .string "Or are you a girl?$"

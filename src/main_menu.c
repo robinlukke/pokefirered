@@ -7,6 +7,7 @@
 #include "menu.h"
 #include "link.h"
 #include "oak_speech.h"
+#include "oak_speech_new_game_plus.h"
 #include "overworld.h"
 #include "quest_log.h"
 #include "mystery_gift_menu.h"
@@ -22,7 +23,7 @@ enum MainMenuType
 {
     MAIN_MENU_NEWGAME = 0,
     MAIN_MENU_CONTINUE,
-    MAIN_MENU_MYSTERYGIFT
+    MAIN_MENU_NEWGAMEPLUS
 };
 
 enum MainMenuWindow
@@ -30,7 +31,7 @@ enum MainMenuWindow
     MAIN_MENU_WINDOW_NEWGAME_ONLY = 0,
     MAIN_MENU_WINDOW_CONTINUE,
     MAIN_MENU_WINDOW_NEWGAME,
-    MAIN_MENU_WINDOW_MYSTERYGIFT,
+    MAIN_MENU_WINDOW_NEWGAMEPLUS,
     MAIN_MENU_WINDOW_ERROR,
     MAIN_MENU_WINDOW_COUNT
 };
@@ -99,7 +100,7 @@ static const struct WindowTemplate sWindowTemplate[] = {
         .paletteNum = 15,
         .baseBlock = 0x0f1
     }, 
-    [MAIN_MENU_WINDOW_MYSTERYGIFT] = {
+    [MAIN_MENU_WINDOW_NEWGAMEPLUS] = {
         .bg = 0,
         .tilemapLeft = 3,
         .tilemapTop = 17,
@@ -235,7 +236,7 @@ static void Task_SetWin0BldRegsAndCheckSaveFile(u8 taskId)
             LoadUserFrameToBg(0);
             if (IsMysteryGiftEnabled() == TRUE)
             {
-                gTasks[taskId].tMenuType = MAIN_MENU_MYSTERYGIFT;
+                gTasks[taskId].tMenuType = MAIN_MENU_NEWGAMEPLUS;
             }
             else
             {
@@ -254,7 +255,7 @@ static void Task_SetWin0BldRegsAndCheckSaveFile(u8 taskId)
             PrintSaveErrorStatus(taskId, gText_SaveFileCorrupted);
             if (IsMysteryGiftEnabled() == TRUE)
             {
-                gTasks[taskId].tMenuType = MAIN_MENU_MYSTERYGIFT;
+                gTasks[taskId].tMenuType = MAIN_MENU_NEWGAMEPLUS;
             }
             else
             {
@@ -367,24 +368,24 @@ static void Task_PrintMainMenuText(u8 taskId)
         CopyWindowToVram(MAIN_MENU_WINDOW_CONTINUE, COPYWIN_GFX);
         CopyWindowToVram(MAIN_MENU_WINDOW_NEWGAME, COPYWIN_FULL);
         break;
-    case MAIN_MENU_MYSTERYGIFT:
+    case MAIN_MENU_NEWGAMEPLUS:
         FillWindowPixelBuffer(MAIN_MENU_WINDOW_CONTINUE, PIXEL_FILL(10));
         FillWindowPixelBuffer(MAIN_MENU_WINDOW_NEWGAME, PIXEL_FILL(10));
-        FillWindowPixelBuffer(MAIN_MENU_WINDOW_MYSTERYGIFT, PIXEL_FILL(10));
+        FillWindowPixelBuffer(MAIN_MENU_WINDOW_NEWGAMEPLUS, PIXEL_FILL(10));
         AddTextPrinterParameterized3(MAIN_MENU_WINDOW_CONTINUE, FONT_NORMAL, 2, 2, sTextColor1, -1, gText_Continue);
         AddTextPrinterParameterized3(MAIN_MENU_WINDOW_NEWGAME, FONT_NORMAL, 2, 2, sTextColor1, -1, gText_NewGame);
         gTasks[taskId].tMGErrorType = 1;
-        AddTextPrinterParameterized3(MAIN_MENU_WINDOW_MYSTERYGIFT, FONT_NORMAL, 2, 2, sTextColor1, -1, gText_MysteryGift);
+        AddTextPrinterParameterized3(MAIN_MENU_WINDOW_NEWGAMEPLUS, FONT_NORMAL, 2, 2, sTextColor1, -1, gText_NewGamePlus);
         PrintContinueStats();
         MainMenu_DrawWindow(&sWindowTemplate[MAIN_MENU_WINDOW_CONTINUE]);
         MainMenu_DrawWindow(&sWindowTemplate[MAIN_MENU_WINDOW_NEWGAME]);
-        MainMenu_DrawWindow(&sWindowTemplate[MAIN_MENU_WINDOW_MYSTERYGIFT]);
+        MainMenu_DrawWindow(&sWindowTemplate[MAIN_MENU_WINDOW_NEWGAMEPLUS]);
         PutWindowTilemap(MAIN_MENU_WINDOW_CONTINUE);
         PutWindowTilemap(MAIN_MENU_WINDOW_NEWGAME);
-        PutWindowTilemap(MAIN_MENU_WINDOW_MYSTERYGIFT);
+        PutWindowTilemap(MAIN_MENU_WINDOW_NEWGAMEPLUS);
         CopyWindowToVram(MAIN_MENU_WINDOW_CONTINUE, COPYWIN_GFX);
         CopyWindowToVram(MAIN_MENU_WINDOW_NEWGAME, COPYWIN_GFX);
-        CopyWindowToVram(MAIN_MENU_WINDOW_MYSTERYGIFT, COPYWIN_FULL);
+        CopyWindowToVram(MAIN_MENU_WINDOW_NEWGAMEPLUS, COPYWIN_FULL);
         break;
     }
     gTasks[taskId].func = Task_WaitDma3AndFadeIn;
@@ -438,7 +439,7 @@ static void Task_ExecuteMainMenuSelection(u8 taskId)
                 break;
             }
             break;
-        case MAIN_MENU_MYSTERYGIFT:
+        case MAIN_MENU_NEWGAMEPLUS:
             switch (gTasks[taskId].tCursorPos)
             {
             default:
@@ -449,7 +450,7 @@ static void Task_ExecuteMainMenuSelection(u8 taskId)
                 menuAction = MAIN_MENU_NEWGAME;
                 break;
             case 2:
-                if (!IsWirelessAdapterConnected())
+				if (CalculatePlayerPartyCount() > 1/*  && IsPokemonStorageFull() */)
                 {
                     SetStdFrame0OnBg(0);
                     gTasks[taskId].func = Task_MysteryGiftError;
@@ -458,7 +459,7 @@ static void Task_ExecuteMainMenuSelection(u8 taskId)
                 }
                 else
                 {
-                    menuAction = MAIN_MENU_MYSTERYGIFT;
+                    menuAction = MAIN_MENU_NEWGAMEPLUS;
                 }
                 break;
             }
@@ -478,13 +479,15 @@ static void Task_ExecuteMainMenuSelection(u8 taskId)
             gPlttBufferFaded[0] = RGB_BLACK;
             gExitStairsMovementDisabled = FALSE;
             FreeAllWindowBuffers();
-            TryStartQuestLogPlayback(taskId);
+            //TryStartQuestLogPlayback(taskId);
+			SetMainCallback2(CB2_ContinueSavedGame);
+			DestroyTask(taskId);
             break;
-        case MAIN_MENU_MYSTERYGIFT:
-            SetMainCallback2(CB2_InitMysteryGift);
-            HelpSystem_Disable();
+        case MAIN_MENU_NEWGAMEPLUS:
+            gExitStairsMovementDisabled = FALSE;
             FreeAllWindowBuffers();
             DestroyTask(taskId);
+            StartNewGamePlusScene();
             break;
         }
     }
@@ -543,7 +546,7 @@ static void MoveWindowByMenuTypeAndCursorPos(u8 menuType, u8 cursorPos)
         win0vBot = 0x20;
         break;
     case MAIN_MENU_CONTINUE:
-    case MAIN_MENU_MYSTERYGIFT:
+    case MAIN_MENU_NEWGAMEPLUS:
         switch (cursorPos)
         {
         default:
@@ -555,7 +558,7 @@ static void MoveWindowByMenuTypeAndCursorPos(u8 menuType, u8 cursorPos)
             win0vTop = 0x60 << 8;
             win0vBot = 0x80;
             break;
-        case 2: // MYSTERY GIFT
+        case 2: // NEW GAME PLUS
             win0vTop = 0x80 << 8;
             win0vBot = 0xA0;
             break;

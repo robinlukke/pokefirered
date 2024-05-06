@@ -1532,12 +1532,39 @@ static void SpriteCB_UnusedDebugSprite_Step(struct Sprite *sprite)
     }
 }
 
+s32 GetHighestLevelInPlayerParty(void)
+{
+    s32 highestLevel = 0;
+    s32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestLevel)
+                highestLevel = level;
+        }
+    }
+
+    return highestLevel;
+}
+
 static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
 {
     u32 nameHash = 0;
     u32 personalityValue;
     u8 fixedIV;
     s32 i, j;
+	
+	u8 level;
+	u8 PlayerMonLevel;
+	u8 EnemyMonLevel;
+	u8 trainerClass;
+	u32 LevelDifference;
+	u32 EnemyMonLevelAdjusted;
+	
 
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
@@ -1564,25 +1591,85 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
             case 0:
             {
                 const struct TrainerMonNoItemDefaultMoves *partyData = gTrainers[trainerNum].party.NoItemDefaultMoves;
+				
+				PlayerMonLevel = GetHighestLevelInPlayerParty();
+				EnemyMonLevel = partyData[i].lvl;
+				
+				level = EnemyMonLevel;
+				
+				LevelDifference = (PlayerMonLevel - EnemyMonLevel);
+				EnemyMonLevelAdjusted = (GetHighestLevelInPlayerParty() - 4);
+				
+				if (EnemyMonLevel >= PlayerMonLevel)
+				{
+					level = EnemyMonLevel;
+				}
+				else if (LevelDifference > 3)
+				{
+					level = EnemyMonLevelAdjusted;
+				}
+				
+				if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) && ((gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_AQUA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_MAGMA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_BOSS)
+					|  (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_CHAMPION)))
+					{
+						if (EnemyMonLevel < PlayerMonLevel)
+							level = PlayerMonLevel;
+						else
+							level = EnemyMonLevel;
+					}
 
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, level, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
                 break;
             }
             case F_TRAINER_PARTY_CUSTOM_MOVESET:
             {
                 const struct TrainerMonNoItemCustomMoves *partyData = gTrainers[trainerNum].party.NoItemCustomMoves;
 
+				PlayerMonLevel = GetHighestLevelInPlayerParty();
+				EnemyMonLevel = partyData[i].lvl;
+				
+				level = EnemyMonLevel;
+				
+				LevelDifference = (PlayerMonLevel - EnemyMonLevel);
+				EnemyMonLevelAdjusted = (GetHighestLevelInPlayerParty() - 4);
+				
+				if (EnemyMonLevel >= PlayerMonLevel)
+				{
+					level = EnemyMonLevel;
+				}
+				else if (LevelDifference > 3)
+				{
+					level = EnemyMonLevelAdjusted;
+				}
+				
+				if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) && ((gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_AQUA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_MAGMA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_BOSS)
+					|  (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_CHAMPION)))
+					{
+						if (EnemyMonLevel < PlayerMonLevel)
+							level = PlayerMonLevel;
+						else
+							level = EnemyMonLevel;
+					}
+
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, level, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
 
                 for (j = 0; j < MAX_MON_MOVES; j++)
                 {
@@ -1595,12 +1682,42 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
             {
                 const struct TrainerMonItemDefaultMoves *partyData = gTrainers[trainerNum].party.ItemDefaultMoves;
 
+				PlayerMonLevel = GetHighestLevelInPlayerParty();
+				EnemyMonLevel = partyData[i].lvl;
+				
+				level = EnemyMonLevel;
+				
+				LevelDifference = (PlayerMonLevel - EnemyMonLevel);
+				EnemyMonLevelAdjusted = (GetHighestLevelInPlayerParty() - 4);
+				
+				if (EnemyMonLevel >= PlayerMonLevel)
+				{
+					level = EnemyMonLevel;
+				}
+				else if (LevelDifference > 3)
+				{
+					level = EnemyMonLevelAdjusted;
+				}
+				
+				if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) && ((gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_AQUA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_MAGMA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_BOSS)
+					|  (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_CHAMPION)))
+					{
+						if (EnemyMonLevel < PlayerMonLevel)
+							level = PlayerMonLevel;
+						else
+							level = EnemyMonLevel;
+					}
+
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, level, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
 
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
                 break;
@@ -1609,12 +1726,42 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
             {
                 const struct TrainerMonItemCustomMoves *partyData = gTrainers[trainerNum].party.ItemCustomMoves;
 
+				PlayerMonLevel = GetHighestLevelInPlayerParty();
+				EnemyMonLevel = partyData[i].lvl;
+				
+				level = EnemyMonLevel;
+				
+				LevelDifference = (PlayerMonLevel - EnemyMonLevel);
+				EnemyMonLevelAdjusted = (GetHighestLevelInPlayerParty() - 4);
+				
+				if (EnemyMonLevel >= PlayerMonLevel)
+				{
+					level = EnemyMonLevel;
+				}
+				else if (LevelDifference > 3)
+				{
+					level = EnemyMonLevelAdjusted;
+				}
+				
+				if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) && ((gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_AQUA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_MAGMA_LEADER)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_BOSS)
+					|  (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR)
+					| (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_CHAMPION)))
+					{
+						if (EnemyMonLevel < PlayerMonLevel)
+							level = PlayerMonLevel;
+						else
+							level = EnemyMonLevel;
+					}
+
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; j++)
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, level, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
 
                 for (j = 0; j < MAX_MON_MOVES; j++)
@@ -3859,10 +4006,7 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
     if (!gPaletteFade.active)
     {
         ResetSpriteData();
-        if (gLeveledUpInBattle == 0 || gBattleOutcome != B_OUTCOME_WON)
-            gBattleMainFunc = ReturnFromBattleToOverworld;
-        else
-            gBattleMainFunc = TryEvolvePokemon;
+        gBattleMainFunc = ReturnFromBattleToOverworld;
         FreeAllWindowBuffers();
         if (!(gBattleTypeFlags & BATTLE_TYPE_LINK))
         {
@@ -3923,11 +4067,7 @@ static void ReturnFromBattleToOverworld(void)
         if (gBattleTypeFlags & BATTLE_TYPE_ROAMER)
         {
             UpdateRoamerHPStatus(&gEnemyParty[0]);
-#ifdef BUGFIX
             if ((gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)
-#else
-            if ((gBattleOutcome & B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT) // Bug: When Roar is used by roamer, gBattleOutcome is B_OUTCOME_PLAYER_TELEPORTED (5).
-#endif                                                                                  // & with B_OUTCOME_WON (1) will return TRUE and deactivates the roamer.
                 SetRoamerInactive();
         }
         m4aSongNumStop(SE_LOW_HEALTH);

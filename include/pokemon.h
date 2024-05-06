@@ -352,6 +352,7 @@ void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg);
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg);
 void CopyMon(void *dest, void *src, size_t size);
 u8 GiveMonToPlayer(struct Pokemon *mon);
+void SendPlayerPartyToPC(void);
 u8 CalculatePlayerPartyCount(void);
 u8 CalculateEnemyPartyCount(void);
 u8 GetMonsStateToDoubles(void);
@@ -405,7 +406,7 @@ bool32 IsHMMove2(u16 move);
 bool8 IsMonSpriteNotFlipped(u16 species);
 s8 GetFlavorRelationByPersonality(u32 personality, u8 flavor);
 bool8 IsTradedMon(struct Pokemon *mon);
-bool8 IsOtherTrainer(u32 otId, u8 *otName);
+bool8 IsOtherTrainer(u32 otId);
 void MonRestorePP(struct Pokemon *mon);
 void BoxMonRestorePP(struct BoxPokemon *boxMon);
 void SetMonPreventsSwitchingString(void);
@@ -424,5 +425,7 @@ bool8 CheckBattleTypeGhost(struct Pokemon *mon, u8 bank);
 struct MonSpritesGfxManager *CreateMonSpritesGfxManager(u8 battlePosition, u8 mode);
 void DestroyMonSpritesGfxManager(void);
 u8 *MonSpritesGfxManager_GetSpritePtr(u8 bufferId);
+u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
+u32 CanSpeciesLearnTMHM(u16 species, u8 tm);
 
 #endif // GUARD_POKEMON_H

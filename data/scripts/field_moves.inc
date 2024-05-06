@@ -1,6 +1,8 @@
 EventScript_CutTree::
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
+	checkitem ITEM_HM01, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CantCutTree
 	goto_if_unset FLAG_BADGE02_GET, EventScript_CantCutTree
 	checkpartymove MOVE_CUT
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantCutTree
@@ -59,6 +61,8 @@ Text_TreeCanBeCutDown::
 EventScript_RockSmash::
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
+	checkitem ITEM_HM06, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CantSmashRock					
 	goto_if_unset FLAG_BADGE06_GET, EventScript_CantSmashRock
 	checkpartymove MOVE_ROCK_SMASH
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSmashRock
@@ -121,6 +125,8 @@ EventScript_StrengthBoulder::
 	lockall
 	goto_if_unset FLAG_BADGE04_GET, EventScript_CantMoveBoulder
 	goto_if_set FLAG_SYS_USE_STRENGTH, EventScript_AlreadyUsedStrength
+	checkitem ITEM_HM04, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CantMoveBoulder			   
 	checkpartymove MOVE_STRENGTH
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantMoveBoulder
 	setfieldeffectargument 0, VAR_RESULT
@@ -178,6 +184,8 @@ Text_StrengthMadeMovingBouldersPossible::
 EventScript_Waterfall::
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
+	checkitem ITEM_HM07, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_WaterCrashingDown						
 	checkpartymove MOVE_WATERFALL
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_WaterCrashingDown
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
@@ -210,6 +218,8 @@ Text_MonUsedWaterfall::
 @ Unused leftover from R/S
 EventScript_DeepWater::
 	lockall
+	checkitem ITEM_HM08, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_MayGoUnderwater				   
 	checkpartymove MOVE_DIVE
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_MayGoUnderwater
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
@@ -231,6 +241,8 @@ EventScript_EndDive:
 
 EventScript_TrySurface::
 	lockall
+	checkitem ITEM_HM08, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CantSurface					  
 	checkpartymove MOVE_DIVE
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSurface
 	bufferpartymonnick STR_VAR_1, VAR_RESULT

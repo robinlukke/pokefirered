@@ -1,0 +1,6 @@
+#ifndef GUARD_OAK_SPEECH_NEW_GAME_PLUS_H
+#define GUARD_OAK_SPEECH_NEW_GAME_PLUS_H
+
+void StartNewGamePlusScene(void);
+
+#endif //GUARD_OAK_SPEECH_NEW_GAME_PLUS_H

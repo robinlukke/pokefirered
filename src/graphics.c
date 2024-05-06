@@ -6,8 +6,8 @@ const u32 gBattleInterface_Textbox_Tilemap[] = INCBIN_U32("graphics/battle_inter
 
 const u32 gMonFrontPic_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/front.4bpp.lz");
 const u32 gMonBackPic_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/back.4bpp.lz");
-const u32 gMonPalette_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/normal.gbapal.lz");
-const u32 gMonShinyPalette_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/shiny.gbapal.lz");
+const u32 gMonPalette_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/front.gbapal.lz");
+const u32 gMonShinyPalette_CircledQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/circled/back.gbapal.lz");
 
 // From Ruby.
 const u32 gUnusedGfx_OldCharmap[] = INCBIN_U32("graphics/unused/old_charmap.4bpp.lz");
@@ -1177,6 +1177,7 @@ const u32 gNamingScreenInputArrow_Gfx[]     = INCBIN_U32("graphics/naming_screen
 const u32 gNamingScreenUnderscore_Gfx[]     = INCBIN_U32("graphics/naming_screen/underscore.4bpp");
 
 const u8 gTMCaseHM_Gfx[] = INCBIN_U8("graphics/tm_case/hm.4bpp");
+const u8 gTMCaseTM_Gfx[] = INCBIN_U8("graphics/tm_case/tm.4bpp");
 
 const u16 gKantoTrainerCardBlue_Pal[] = INCBIN_U16("graphics/trainer_card/blue.gbapal");
 const u32 gKantoTrainerCard_Gfx[] = INCBIN_U32("graphics/trainer_card/tiles.4bpp.lz");

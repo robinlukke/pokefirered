@@ -87,7 +87,7 @@ void InitIntrHandlers(void);
 static void WaitForVBlank(void);
 void EnableVCountIntrAtLine150(void);
 
-#define B_START_SELECT (B_BUTTON | START_BUTTON | SELECT_BUTTON)
+#define R_START_SELECT (R_BUTTON | START_BUTTON | SELECT_BUTTON)
 
 void AgbMain()
 {
@@ -163,8 +163,8 @@ void AgbMain()
         ReadKeys();
 
         if (gSoftResetDisabled == FALSE
-         && (gMain.heldKeysRaw & A_BUTTON)
-         && (gMain.heldKeysRaw & B_START_SELECT) == B_START_SELECT)
+         && (gMain.heldKeysRaw & L_BUTTON)
+         && (gMain.heldKeysRaw & R_START_SELECT) == R_START_SELECT)
         {
             rfu_REQ_stopMode();
             rfu_waitREQComplete();

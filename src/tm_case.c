@@ -25,8 +25,7 @@
 #include "constants/songs.h"
 #include "constants/quest_log.h"
 
-// Any item in the TM Case with nonzero importance is considered an HM
-#define IS_HM(itemId) (ItemId_GetImportance(itemId) != 0)
+#define IS_HM(itemId) ((itemId == ITEM_HM01 || itemId == ITEM_HM02 || itemId == ITEM_HM03 || itemId == ITEM_HM04 || itemId == ITEM_HM05 || itemId == ITEM_HM06 || itemId == ITEM_HM07 || itemId == ITEM_HM08))
 
 #define TAG_SCROLL_ARROW 110
 
@@ -169,6 +168,7 @@ static void PrintMessageWithFollowupTask(u8 taskId, u8 fontId, const u8 * str, T
 static void PrintTitle(void);
 static void DrawMoveInfoLabels(void);
 static void PlaceHMTileInWindow(u8 windowId, u8 x, u8 y);
+static void PlaceTMTileInWindow(u8 windowId, u8 x, u8 y);
 static void PrintPlayersMoney(void);
 static void HandleCreateYesNoMenu(u8 taskId, const struct YesNoFuncTable * ptrs);
 static u8 AddContextMenu(u8 * windowId, u8 windowIndex);
@@ -681,13 +681,14 @@ static void GetTMNumberAndMoveString(u8 * dest, u16 itemId)
     if (itemId >= ITEM_HM01)
     {
         StringAppend(gStringVar4, sText_ClearTo18);
-        StringAppend(gStringVar4, gText_NumberClear01);
-        ConvertIntToDecimalStringN(gStringVar1, itemId - ITEM_HM01 + 1, STR_CONV_MODE_LEADING_ZEROS, 1);
+        //StringAppend(gStringVar4, gText_NumberClear01);
+        ConvertIntToDecimalStringN(gStringVar1, itemId - ITEM_HM01 + 1, STR_CONV_MODE_LEADING_ZEROS, 2);
         StringAppend(gStringVar4, gStringVar1);
     }
     else
     {
-        StringAppend(gStringVar4, gText_NumberClear01);
+		StringAppend(gStringVar4, sText_ClearTo18);
+        //StringAppend(gStringVar4, gText_NumberClear01);
         ConvertIntToDecimalStringN(gStringVar1, itemId - ITEM_TM01 + 1, STR_CONV_MODE_LEADING_ZEROS, 2);
         StringAppend(gStringVar4, gStringVar1);
     }
@@ -721,9 +722,10 @@ static void List_ItemPrintFunc(u8 windowId, u32 itemIndex, u8 y)
     {
         if (!IS_HM(BagGetItemIdByPocketPosition(POCKET_TM_CASE, itemIndex)))
         {
-            ConvertIntToDecimalStringN(gStringVar1, BagGetQuantityByPocketPosition(POCKET_TM_CASE, itemIndex), STR_CONV_MODE_RIGHT_ALIGN, 3);
+            /* ConvertIntToDecimalStringN(gStringVar1, BagGetQuantityByPocketPosition(POCKET_TM_CASE, itemIndex), STR_CONV_MODE_RIGHT_ALIGN, 3);
             StringExpandPlaceholders(gStringVar4, gText_TimesStrVar1);
-            TMCase_Print(windowId, FONT_SMALL, gStringVar4, 126, y, 0, 0, TEXT_SKIP_DRAW, COLOR_DARK);
+            TMCase_Print(windowId, FONT_SMALL, gStringVar4, 126, y, 0, 0, TEXT_SKIP_DRAW, COLOR_DARK); */
+			PlaceTMTileInWindow(windowId, 8, y);
         }
         else
         {
@@ -986,6 +988,11 @@ static void Task_SelectedTMHM_Field(u8 taskId)
         PlaceHMTileInWindow(WIN_SELECTED_MSG, 0, 2);
         CopyWindowToVram(WIN_SELECTED_MSG, COPYWIN_GFX);
     }
+	else
+	{
+	    PlaceTMTileInWindow(WIN_SELECTED_MSG, 0, 2);
+        CopyWindowToVram(WIN_SELECTED_MSG, COPYWIN_GFX);
+	}
 
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
@@ -1587,6 +1594,11 @@ static void PrintMoveInfo(u16 itemId)
 static void PlaceHMTileInWindow(u8 windowId, u8 x, u8 y)
 {
     BlitBitmapToWindow(windowId, gTMCaseHM_Gfx, x, y, 16, 12);
+}
+
+static void PlaceTMTileInWindow(u8 windowId, u8 x, u8 y)
+{
+    BlitBitmapToWindow(windowId, gTMCaseTM_Gfx, x, y, 16, 12);
 }
 
 static void PrintPlayersMoney(void)

@@ -72,6 +72,7 @@ static bool8 PartyMonHasStatus(struct Pokemon *mon, u32 unused, u32 healMask, u8
 static bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId);
 static bool8 IsPokemonStorageFull(void);
 static u8 SendMonToPC(struct Pokemon* mon);
+void SendPlayerPartyToPC(void);
 static void EncryptBoxMon(struct BoxPokemon *boxMon);
 static void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
 static void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon);
@@ -1769,6 +1770,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     u32 personality;
     u32 value;
     u16 checksum;
+	u8 gGameVersion;
 
     ZeroBoxMonData(boxMon);
 
@@ -1816,7 +1818,26 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     value = GetCurrentRegionMapSectionId();
     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
+	
+	{
+	gGameVersion = VERSION_FIRE_RED;
+	if (
+	species == SPECIES_SANDSHREW
+	||species == SPECIES_VULPIX
+	||species == SPECIES_BELLSPROUT
+	||species == SPECIES_SLOWPOKE
+	||species == SPECIES_STARYU
+	||species == SPECIES_MAGMAR
+	||species == SPECIES_PINSIR
+	||species == SPECIES_MARILL
+	||species == SPECIES_MISDREAVUS
+	||species == SPECIES_SNEASEL
+	||species == SPECIES_REMORAID
+	||species == SPECIES_MANTINE)
+		gGameVersion = VERSION_LEAF_GREEN;
     SetBoxMonData(boxMon, MON_DATA_MET_GAME, &gGameVersion);
+	}
+	
     value = ITEM_POKE_BALL;
     SetBoxMonData(boxMon, MON_DATA_POKEBALL, &value);
     SetBoxMonData(boxMon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
@@ -2155,12 +2176,9 @@ void CalculateMonStats(struct Pokemon *mon)
         if (currentHP == 0 && oldMaxHP == 0)
             currentHP = newMaxHP;
         else if (currentHP != 0) {
-            // BUG: currentHP is unintentionally able to become <= 0 after the instruction below.
             currentHP += newMaxHP - oldMaxHP;
-            #ifdef BUGFIX
             if (currentHP <= 0)
                 currentHP = 1;
-            #endif
         }
         else
             return;
@@ -2274,6 +2292,9 @@ static void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
         u16 move;
 
         moveLevel = (gLevelUpLearnsets[species][i] & LEVEL_UP_MOVE_LV);
+
+		if (moveLevel == 0)
+            continue;
 
         if (moveLevel > (level << 9))
             break;
@@ -3727,6 +3748,19 @@ static u8 SendMonToPC(struct Pokemon* mon)
     return MON_CANT_GIVE;
 }
 
+void SendPlayerPartyToPC(void)
+{
+    u32 i = 0;
+	
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        SendMonToPC(&gPlayerParty[i]);
+        ZeroPlayerPartyMons();
+    }
+    CompactPartySlots();
+	CalculatePlayerPartyCount();
+}
+
 u8 CalculatePlayerPartyCount(void)
 {
     gPlayerPartyCount = 0;
@@ -5110,16 +5144,10 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
             case EVO_TRADE_ITEM:
                 if (gEvolutionTable[species][i].param == heldItem)
                 {
+                    heldItem = ITEM_NONE;
+                    SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
-                    
-                    // Prevent cross-generational evolutions like Scizor and Steelix until the National Pokedex is obtained
-                    if (IsNationalPokedexEnabled() || targetSpecies <= KANTO_SPECIES_END)
-                    {
-                        heldItem = ITEM_NONE;
-                        SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
-                        targetSpecies = gEvolutionTable[species][i].targetSpecies;
-                    }
-                }
+				}
                 break;
             }
         }
@@ -5956,10 +5984,10 @@ bool8 IsTradedMon(struct Pokemon *mon)
     u32 otId;
     GetMonData(mon, MON_DATA_OT_NAME, otName);
     otId = GetMonData(mon, MON_DATA_OT_ID, NULL);
-    return IsOtherTrainer(otId, otName);
+    return IsOtherTrainer(otId);
 }
 
-bool8 IsOtherTrainer(u32 otId, u8 *otName)
+bool8 IsOtherTrainer(u32 otId)
 {
     if (otId ==
         (gSaveBlock2Ptr->playerTrainerId[0]
@@ -5967,11 +5995,6 @@ bool8 IsOtherTrainer(u32 otId, u8 *otName)
          | (gSaveBlock2Ptr->playerTrainerId[2] << 16)
          | (gSaveBlock2Ptr->playerTrainerId[3] << 24)))
     {
-        int i;
-
-        for (i = 0; otName[i] != EOS; i++)
-            if (otName[i] != gSaveBlock2Ptr->playerName[i])
-                return TRUE;
         return FALSE;
     }
 
@@ -6030,9 +6053,9 @@ void SetWildMonHeldItem(void)
             return;
         }
 
-        if (rnd > 44)
+        if (rnd > 49)
         {
-            if (rnd <= 94)
+            if (rnd <= 89)
                 SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, &gSpeciesInfo[species].itemCommon);
             else
                 SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, &gSpeciesInfo[species].itemRare);
@@ -6439,3 +6462,96 @@ u8 *MonSpritesGfxManager_GetSpritePtr(u8 spriteNum)
         return sMonSpritesGfxManager->spritePointers[spriteNum];
     }
 }
+
+u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove)
+{
+    u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
+    u8 level = GetMonData(mon, MON_DATA_LEVEL, NULL);
+u8 speciesName[POKEMON_NAME_LENGTH + 1];
+
+	// EXCEPTIONS: Pokemon that can't legally learn moves
+	//when they evolve before certain levels
+	if (
+	(species == SPECIES_NIDOKING)
+	&& (level < 22))
+			return 0;		
+	if (
+	(species == SPECIES_CLEFABLE)
+	&& (level < 29))
+			return 0;		
+	if (
+	(species == SPECIES_ARCANINE)
+	&& (level < 49))
+			return 0;
+	if (
+	(species == SPECIES_POLIWRATH)
+	&& (level < 35))
+			return 0;
+	if (
+	(species == SPECIES_CLOYSTER)
+	&& (level < 8))
+			return 0;
+	if (
+	(species == SPECIES_EXEGGUTOR)
+	&& (level < 19))
+			return 0;
+	if (
+	(species == SPECIES_VAPOREON
+	|| species == SPECIES_JOLTEON
+	|| species == SPECIES_FLAREON
+	|| species == SPECIES_ESPEON
+	|| species == SPECIES_UMBREON)
+	&& (level < 16))
+			return 0;
+	if (
+	(species == SPECIES_SHARPEDO)
+	&& (level < 33))
+			return 0;
+
+    // since you can learn more than one move per level
+    // the game needs to know whether you decided to
+    // learn it or keep the old set to avoid asking
+    // you to learn the same move over and over again
+    if (firstMove)
+    {
+        sLearningMoveTableID = 0;
+    }
+    while(gLevelUpLearnsets[species][sLearningMoveTableID] != LEVEL_UP_END)
+    {
+        u16 moveLevel;
+        moveLevel = (gLevelUpLearnsets[species][sLearningMoveTableID] & LEVEL_UP_MOVE_LV);
+        while (moveLevel == 0 || moveLevel == (level << 9))
+        {
+            gMoveToLearn = (gLevelUpLearnsets[species][sLearningMoveTableID] & LEVEL_UP_MOVE_ID);
+            sLearningMoveTableID++;
+            return GiveMoveToMon(mon, gMoveToLearn);
+        }
+        sLearningMoveTableID++;
+    }
+    return 0;
+}
+
+u32 CanSpeciesLearnTMHM(u16 species, u8 tm)
+{
+    if (species == SPECIES_EGG)
+    {
+        return 0;
+    }
+    else if (tm < 32)
+    {
+        u32 mask = 1 << tm;
+        return sTMHMLearnsets[species][0] & mask;
+    }
+    else
+    {
+        u32 mask = 1 << (tm - 32);
+        return sTMHMLearnsets[species][1] & mask;
+    }/* 
+    else
+    {
+        u32 index = tm / 32;
+        u32 mask = 1 << (tm % 32);
+        return sTMHMLearnsets[species][index] & mask;
+    } */
+}
+

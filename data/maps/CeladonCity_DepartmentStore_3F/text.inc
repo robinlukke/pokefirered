@@ -12,10 +12,7 @@ CeladonCity_DepartmentStore_3F_Text_BuddyTradingKangaskhanForHaunter::
 CeladonCity_DepartmentStore_3F_Text_HaunterEvolvedOnTrade::
     .string "Come on, HAUNTER!\p"
     .string "I love HAUNTER!\n"
-    .string "I collect them!\p"
-    .string "Huh?\p"
-    .string "HAUNTER turned into a different\n"
-    .string "POKéMON while being traded!$"
+    .string "I collect them!$"
 
 CeladonCity_DepartmentStore_3F_Text_CanIdentifyTradeMonsByID::
     .string "You can identify POKéMON you get\n"

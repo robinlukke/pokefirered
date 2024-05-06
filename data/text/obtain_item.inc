@@ -45,3 +45,7 @@ Text_NoRoomForAnotherDecor::
 Text_DecorTransferredToPC::
 	.string "The {STR_VAR_2} was transferred\n"
 	.string "to the PC.$"
+
+Text_YouAlreadyHaveThis::
+	.string "You already have\n"
+	.string "this item…$"

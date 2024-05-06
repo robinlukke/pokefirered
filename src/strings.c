@@ -17,11 +17,13 @@ const u8 gExpandedPlaceholder_Green[] = _("GREEN");
 const u8 gText_EggNickname[] = _("EGG");
 const u8 gText_MenuPokemon[] = _("POKéMON");
 const u8 gText_NewGame[] = _("NEW GAME");
+const u8 gText_NewGamePlus[] = _("NEW GAME PLUS");
 const u8 gText_Continue[] = _("CONTINUE");
 const u8 gTextJP_Options[] = _("せっていを かえる");
 const u8 gUnusedText_MysteryGift[] = _("MYSTERY GIFT");
 const u8 gText_MysteryGift[] = _("MYSTERY GIFT");
-const u8 gText_WirelessNotConnected[] = _("The Wireless Adapter is not\nconnected.");
+//const u8 gText_WirelessNotConnected[] = _("The Wireless Adapter is not\nconnected.");
+const u8 gText_WirelessNotConnected[] = _("You must have only one POKéMON\nin your party to be able\pto start a NEW GAME PLUS.");
 const u8 gText_MysteryGiftCantUse[] = _("MYSTERY GIFT can't be used while\nthe Wireless Adapter is attached.");
 const u8 gText_UpdatingSaveExternalData[] = _("がいぶデ-タにより レポ-トを こうしんします\nしばらく おまちください");
 const u8 gText_SaveFileUpdated[] = _("レポ-トが こうしんされました!");
@@ -226,6 +228,7 @@ const u8 gText_ThankYouIllSendItHome[] = _("どうも ありがとう!\nじた�
 const u8 gText_ThanksIllSendItHome[] = _("どうも ありがとう!\nじたくの パソコンに おくって おくね!");
 const u8 gText_YouDontHaveMoney[] = _("You don't have enough money.{PAUSE_UNTIL_PRESS}");
 const u8 gText_NoMoreRoomForThis[] = _("You have no more room for this\nitem.{PAUSE_UNTIL_PRESS}");
+const u8 gText_YouAlreadyHaveThis[] = _("You already have\nthis item.{PAUSE_UNTIL_PRESS}");
 const u8 gText_SpaceForVar1Full[] = _("{STR_VAR_1}を\nいれる ばしょが いっぱいです{PAUSE_UNTIL_PRESS}");
 const u8 gText_AnythingElseICanHelp[] = _("Is there anything else I can do?");
 const u8 gText_CanIHelpWithAnythingElse[] = _("その ほかに\nなにか ちからに なれることは?");
@@ -1333,3 +1336,18 @@ const u8 gText_Receive[] = _("RECEIVE");
 const u8 gText_Send[] = _("SEND");
 const u8 gText_Toss[] = _("TOSS");
 const u8 gText_DelAllCancelOk[] = _("DEL. ALL{CLEAR_TO 0x57}CANCEL{CLEAR_TO 0xA4}OK");
+
+// Evolve in party screen option
+const u8 gText_Evolve[] = _("EVOLVE");
+
+// Move Item
+const u8 gText_Move[] = _("MOVE");
+const u8 gText_MoveItemWhere[] = _("Move item to where?");
+const u8 gText_XsYAnd[] = _("{STR_VAR_1}'s\n{STR_VAR_2} and\l");
+const u8 gText_XsYWereSwapped[] = _("{STR_VAR_1}'s\l{STR_VAR_2} were swapped!{PAUSE_UNTIL_PRESS}");
+
+const u8 gText_YouCantUseThisYet[] = _("You can't use this yet.{PAUSE_UNTIL_PRESS}");
+
+const u8 gText_SoldOut[] = _("SOLD OUT");
+
+

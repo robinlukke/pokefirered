@@ -472,13 +472,13 @@ static const struct WindowTemplate sWhichMoveMsgWindowTemplate =
     .baseBlock = 0x299,
 };
 
-static const struct WindowTemplate sItemGiveTakeWindowTemplate =
+static const struct WindowTemplate sItemGiveTakeMoveWindowTemplate =
 {
     .bg = 2,
     .tilemapLeft = 22,
-    .tilemapTop = 13,
+    .tilemapTop = 11,
     .width = 7,
-    .height = 6,
+    .height = 8,
     .paletteNum = 14,
     .baseBlock = 0x373,
 };
@@ -629,6 +629,7 @@ static const u8 *const sActionStringTable[] =
     [PARTY_MSG_BOOST_PP_WHICH_MOVE]    = gText_BoostPp,
     [PARTY_MSG_DO_WHAT_WITH_ITEM]      = gText_DoWhatWithItem,
     [PARTY_MSG_DO_WHAT_WITH_MAIL]      = gText_DoWhatWithMail,
+	[PARTY_MSG_MOVE_ITEM_WHERE]        = gText_MoveItemWhere,
 };
 
 static const u8 *const sDescriptionStringTable[] =
@@ -1037,6 +1038,7 @@ enum
     CURSOR_OPTION_ITEM,
     CURSOR_OPTION_GIVE,
     CURSOR_OPTION_TAKE_ITEM,
+	CURSOR_OPTION_MOVE_ITEM,
     CURSOR_OPTION_MAIL,
     CURSOR_OPTION_TAKE_MAIL,
     CURSOR_OPTION_READ,
@@ -1049,6 +1051,7 @@ enum
     CURSOR_OPTION_REGISTER,
     CURSOR_OPTION_TRADE1,
     CURSOR_OPTION_TRADE2,
+	CURSOR_OPTION_EVOLVE,
     CURSOR_OPTION_FIELD_MOVES,
 };
 
@@ -1064,6 +1067,7 @@ static struct
     [CURSOR_OPTION_ITEM]                                 = {gText_Item,                   CursorCB_Item     },
     [CURSOR_OPTION_GIVE]                                 = {gOtherText_Give,              CursorCB_Give     },
     [CURSOR_OPTION_TAKE_ITEM]                            = {gText_Take,                   CursorCB_TakeItem },
+	[CURSOR_OPTION_MOVE_ITEM]                            = {gText_Move,                   CursorCB_MoveItem },
     [CURSOR_OPTION_MAIL]                                 = {gText_Mail,                   CursorCB_Mail     },
     [CURSOR_OPTION_TAKE_MAIL]                            = {gText_Take2,                  CursorCB_TakeMail },
     [CURSOR_OPTION_READ]                                 = {gText_Read2,                  CursorCB_Read     },
@@ -1076,6 +1080,7 @@ static struct
     [CURSOR_OPTION_REGISTER]                             = {gText_Register,               CursorCB_Register },
     [CURSOR_OPTION_TRADE1]                               = {gText_Trade4,                 CursorCB_Trade1   },
     [CURSOR_OPTION_TRADE2]                               = {gText_Trade4,                 CursorCB_Trade2   },
+    [CURSOR_OPTION_EVOLVE]                               = {gText_Evolve,                 CursorCB_Evolve   },
     [CURSOR_OPTION_FIELD_MOVES + FIELD_MOVE_FLASH]       = {gMoveNames[MOVE_FLASH],       CursorCB_FieldMove},
     [CURSOR_OPTION_FIELD_MOVES + FIELD_MOVE_CUT]         = {gMoveNames[MOVE_CUT],         CursorCB_FieldMove},
     [CURSOR_OPTION_FIELD_MOVES + FIELD_MOVE_FLY]         = {gMoveNames[MOVE_FLY],         CursorCB_FieldMove},
@@ -1097,7 +1102,7 @@ static const u8 sPartyMenuAction_SummaryCancel[]         = {CURSOR_OPTION_SUMMAR
 static const u8 sPartyMenuAction_EnterSummaryCancel[]    = {CURSOR_OPTION_ENTER,    CURSOR_OPTION_SUMMARY,   CURSOR_OPTION_CANCEL1};
 static const u8 sPartyMenuAction_NoEntrySummaryCancel[]  = {CURSOR_OPTION_NO_ENTRY, CURSOR_OPTION_SUMMARY,   CURSOR_OPTION_CANCEL1};
 static const u8 sPartyMenuAction_StoreSummaryCancel[]    = {CURSOR_OPTION_STORE,    CURSOR_OPTION_SUMMARY,   CURSOR_OPTION_CANCEL1};
-static const u8 sPartyMenuAction_GiveTakeItemCancel[]    = {CURSOR_OPTION_GIVE,     CURSOR_OPTION_TAKE_ITEM, CURSOR_OPTION_CANCEL2};
+static const u8 sPartyMenuAction_GiveTakeMoveItemCancel[]    = {CURSOR_OPTION_GIVE,     CURSOR_OPTION_TAKE_ITEM, CURSOR_OPTION_MOVE_ITEM, CURSOR_OPTION_CANCEL2};
 static const u8 sPartyMenuAction_ReadTakeMailCancel[]    = {CURSOR_OPTION_READ,     CURSOR_OPTION_TAKE_MAIL, CURSOR_OPTION_CANCEL2};
 static const u8 sPartyMenuAction_RegisterSummaryCancel[] = {CURSOR_OPTION_REGISTER, CURSOR_OPTION_SUMMARY,   CURSOR_OPTION_CANCEL1};
 static const u8 sPartyMenuAction_TradeSummaryCancel1[]   = {CURSOR_OPTION_TRADE1,   CURSOR_OPTION_SUMMARY,   CURSOR_OPTION_CANCEL1};
@@ -1131,7 +1136,7 @@ static const u8 *const sPartyMenuActions[] =
     [ACTIONS_NO_ENTRY]      = sPartyMenuAction_NoEntrySummaryCancel,
     [ACTIONS_STORE]         = sPartyMenuAction_StoreSummaryCancel,
     [ACTIONS_SUMMARY_ONLY]  = sPartyMenuAction_SummaryCancel,
-    [ACTIONS_ITEM]          = sPartyMenuAction_GiveTakeItemCancel,
+    [ACTIONS_ITEM]          = sPartyMenuAction_GiveTakeMoveItemCancel,
     [ACTIONS_MAIL]          = sPartyMenuAction_ReadTakeMailCancel,
     [ACTIONS_REGISTER]      = sPartyMenuAction_RegisterSummaryCancel,
     [ACTIONS_TRADE]         = sPartyMenuAction_TradeSummaryCancel1,
@@ -1148,7 +1153,7 @@ static const u8 sPartyMenuActionCounts[] =
     [ACTIONS_NO_ENTRY]      = NELEMS(sPartyMenuAction_NoEntrySummaryCancel),
     [ACTIONS_STORE]         = NELEMS(sPartyMenuAction_StoreSummaryCancel),
     [ACTIONS_SUMMARY_ONLY]  = NELEMS(sPartyMenuAction_SummaryCancel),
-    [ACTIONS_ITEM]          = NELEMS(sPartyMenuAction_GiveTakeItemCancel),
+    [ACTIONS_ITEM]          = NELEMS(sPartyMenuAction_GiveTakeMoveItemCancel),
     [ACTIONS_MAIL]          = NELEMS(sPartyMenuAction_ReadTakeMailCancel),
     [ACTIONS_REGISTER]      = NELEMS(sPartyMenuAction_RegisterSummaryCancel),
     [ACTIONS_TRADE]         = NELEMS(sPartyMenuAction_TradeSummaryCancel1),

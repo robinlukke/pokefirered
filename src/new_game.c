@@ -14,6 +14,7 @@
 #include "play_time.h"
 #include "money.h"
 #include "battle_records.h"
+#include "pokemon.h"
 #include "pokemon_size_record.h"
 #include "pokemon_storage_system.h"
 #include "roamer.h"
@@ -29,6 +30,7 @@
 #include "berry_powder.h"
 #include "pokemon_jump.h"
 #include "event_scripts.h"
+#include "script_pokemon_util.h"
 
 // this file's functions
 static void ResetMiniGamesResults(void);
@@ -59,10 +61,10 @@ static void InitPlayerTrainerId(void)
 
 static void SetDefaultOptions(void)
 {
-    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
+    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
     gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
-    gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
+    gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SET;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
     gSaveBlock2Ptr->optionsButtonMode = OPTIONS_BUTTON_MODE_HELP;
@@ -149,6 +151,57 @@ void NewGameInitData(void)
     RunScriptImmediately(EventScript_ResetAllMapFlags);
     StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
     ResetTrainerTowerResults();
+}
+
+void NewGamePlusInitData(void)
+{
+    u8 rivalName[PLAYER_NAME_LENGTH + 1];
+
+    StringCopy(rivalName, gSaveBlock1Ptr->rivalName);
+    gDifferentSaveFile = TRUE;
+    //gSaveBlock2Ptr->encryptionKey = 0;
+    //ZeroPlayerPartyMons();
+    //ZeroEnemyPartyMons();
+    //ClearBattleTower();
+    //ClearSav1();
+    ClearMailData();
+    //gSaveBlock2Ptr->specialSaveWarpFlags = 0;
+    //gSaveBlock2Ptr->gcnLinkFlags = 0;
+    //gSaveBlock2Ptr->unkFlag1 = TRUE;
+    //gSaveBlock2Ptr->unkFlag2 = FALSE;
+    //InitPlayerTrainerId();
+    PlayTimeCounter_Reset();
+    //ClearPokedexFlags();
+    InitEventData();
+    ResetFameChecker();
+    //SetMoney(&gSaveBlock1Ptr->money, 3000);
+    //ResetGameStats();
+    ClearPlayerLinkBattleRecords();
+    InitHeracrossSizeRecord();
+    InitMagikarpSizeRecord();
+    //EnableNationalPokedex_RSE();
+    //gPlayerPartyCount = 0;
+    //ZeroPlayerPartyMons();
+	HealPlayerParty();
+	SendPlayerPartyToPC();
+    //ResetPokemonStorageSystem();
+    ClearRoamerData();
+    gSaveBlock1Ptr->registeredItem = 0;
+    //ClearBag();
+	ClearItemSlots(gSaveBlock1Ptr->bagPocket_KeyItems, BAG_KEYITEMS_COUNT);
+	ClearItemSlots(gSaveBlock1Ptr->bagPocket_TMHM, BAG_TMHM_COUNT);
+    //NewGameInitPCItems();
+    //ClearEnigmaBerries();
+    InitEasyChatPhrases();
+    ResetTrainerFanClub();
+    UnionRoomChat_InitializeRegisteredTexts();
+    //ResetMiniGamesResults();
+    ClearMysteryGift();
+    SetAllRenewableItemFlags();
+    WarpToPlayersRoom();
+    RunScriptImmediately(EventScript_ResetAllMapFlags);
+    StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
+    //ResetTrainerTowerResults();
 }
 
 static void ResetMiniGamesResults(void)

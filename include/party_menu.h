@@ -83,4 +83,6 @@ void ShowPartyMenuToShowcaseMultiBattleParty(void);
 void ChooseMonForDaycare(void);
 void ChoosePartyMonByMenuType(u8 menuType);
 
+u8 ReturnTMHMId(u16 move);
+
 #endif // GUARD_PARTY_MENU_H
