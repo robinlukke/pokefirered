@@ -46,20 +46,20 @@ CeladonCity_GameCorner_EventScript_BuyCoins::
 CeladonCity_GameCorner_EventScript_Buy500Coins::
 	checkcoins VAR_TEMP_1
 	goto_if_ge VAR_TEMP_1, (MAX_COINS + 1) - 500, CeladonCity_GameCorner_EventScript_ClerkNoRoomForCoins
-	checkmoney 10000
+	checkmoney 5000
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_ClerkNotEnoughMoney
 	addcoins 500
-	removemoney 10000
+	removemoney 5000
 	goto CeladonCity_GameCorner_EventScript_BoughtCoins
 	end
 
 CeladonCity_GameCorner_EventScript_Buy50Coins::
 	checkcoins VAR_TEMP_1
 	goto_if_ge VAR_TEMP_1, (MAX_COINS + 1) - 50, CeladonCity_GameCorner_EventScript_ClerkNoRoomForCoins
-	checkmoney 1000
+	checkmoney 500
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_ClerkNotEnoughMoney
 	addcoins 50
-	removemoney 1000
+	removemoney 500
 	goto CeladonCity_GameCorner_EventScript_BoughtCoins
 	end
 
