@@ -1995,6 +1995,7 @@ void CreateBattleTowerMon(struct Pokemon *mon, struct BattleTowerPokemon *src)
 {
     s32 i;
     u8 value;
+	u8 iv;
 
     CreateMon(mon, src->species, src->level, 0, TRUE, src->personality, OT_ID_PRESET, src->otId);
 
@@ -2028,17 +2029,13 @@ void CreateBattleTowerMon(struct Pokemon *mon, struct BattleTowerPokemon *src)
     value = src->abilityNum;
     SetMonData(mon, MON_DATA_ABILITY_NUM, &value);
     value = src->hpIV;
-    SetMonData(mon, MON_DATA_HP_IV, &value);
-    value = src->attackIV;
-    SetMonData(mon, MON_DATA_ATK_IV, &value);
-    value = src->defenseIV;
-    SetMonData(mon, MON_DATA_DEF_IV, &value);
-    value = src->speedIV;
-    SetMonData(mon, MON_DATA_SPEED_IV, &value);
-    value = src->spAttackIV;
-    SetMonData(mon, MON_DATA_SPATK_IV, &value);
-    value = src->spDefenseIV;
-    SetMonData(mon, MON_DATA_SPDEF_IV, &value);
+	iv = 31;
+    SetMonData(mon, MON_DATA_HP_IV, &iv);
+    SetMonData(mon, MON_DATA_ATK_IV, &iv);
+    SetMonData(mon, MON_DATA_DEF_IV, &iv);
+    SetMonData(mon, MON_DATA_SPEED_IV, &iv);
+    SetMonData(mon, MON_DATA_SPATK_IV, &iv);
+    SetMonData(mon, MON_DATA_SPDEF_IV, &iv);
     CalculateMonStats(mon);
 }
 
