@@ -674,8 +674,6 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
             return TRUE;
         }
     }
-    if (SafariZoneTakeStep() == TRUE)
-        return TRUE;
     return FALSE;
 }
 

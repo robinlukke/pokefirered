@@ -7,7 +7,6 @@
 #include "field_screen_effect.h"
 
 EWRAM_DATA u8 gNumSafariBalls = 0;
-EWRAM_DATA u16 gSafariZoneStepCounter = 0;
 
 bool32 GetSafariZoneFlag(void)
 {
@@ -29,27 +28,12 @@ void EnterSafariMode(void)
     IncrementGameStat(GAME_STAT_ENTERED_SAFARI_ZONE);
     SetSafariZoneFlag();
     gNumSafariBalls = 30;
-    gSafariZoneStepCounter = 600;
 }
 
 void ExitSafariMode(void)
 {
     ResetSafariZoneFlag();
     gNumSafariBalls = 0;
-    gSafariZoneStepCounter = 0;
-}
-
-bool8 SafariZoneTakeStep(void)
-{
-    if (GetSafariZoneFlag() == FALSE)
-        return FALSE;
-    gSafariZoneStepCounter--;
-    if (gSafariZoneStepCounter == 0)
-    {
-        ScriptContext_SetupScript(SafariZone_EventScript_TimesUp);
-        return TRUE;
-    }
-    return FALSE;
 }
 
 void SafariZoneRetirePrompt(void)
