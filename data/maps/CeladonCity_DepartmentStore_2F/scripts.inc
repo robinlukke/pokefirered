@@ -19,23 +19,8 @@ CeladonCity_DepartmentStore_2F_EventScript_ClerkItems::
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
-	pokemart CeladonCity_DepartmentStore_2F_Items
+	pokemart 0
 	msgbox Text_PleaseComeAgain
-	release
-	end
-
-	.align 2
-CeladonCity_DepartmentStore_2F_Items::
-	.2byte ITEM_GREAT_BALL
-	.2byte ITEM_SUPER_POTION
-	.2byte ITEM_REVIVE
-	.2byte ITEM_ANTIDOTE
-	.2byte ITEM_PARALYZE_HEAL
-	.2byte ITEM_AWAKENING
-	.2byte ITEM_BURN_HEAL
-	.2byte ITEM_ICE_HEAL
-	.2byte ITEM_SUPER_REPEL
-	.2byte ITEM_NONE
 	release
 	end
 
