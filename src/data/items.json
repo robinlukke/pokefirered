@@ -739,7 +739,7 @@
     {
       "english": "SHOAL SALT",
       "itemId": "ITEM_SHOAL_SALT",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Pure salt obtained from deep inside\\nthe SHOAL CAVE. It is extremely\\nsalty.",
@@ -755,7 +755,7 @@
     {
       "english": "SHOAL SHELL",
       "itemId": "ITEM_SHOAL_SHELL",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "A pretty seashell found deep inside\\nthe SHOAL CAVE. It is striped in\\nblue and white.",
@@ -1507,7 +1507,7 @@
     {
       "english": "MOON STONE",
       "itemId": "ITEM_MOON_STONE",
-      "price": 0,
+      "price": 2100,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "A peculiar stone that makes certain\\nspecies of POKéMON evolve.\\nIt is as black as the night sky.",
@@ -2131,7 +2131,7 @@
     {
       "english": "CHERI BERRY",
       "itemId": "ITEM_CHERI_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CURE_PAR",
       "holdEffectParam": 0,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to heal paralysis.",
@@ -2147,7 +2147,7 @@
     {
       "english": "CHESTO BERRY",
       "itemId": "ITEM_CHESTO_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CURE_SLP",
       "holdEffectParam": 0,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to wake up.",
@@ -2163,7 +2163,7 @@
     {
       "english": "PECHA BERRY",
       "itemId": "ITEM_PECHA_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CURE_PSN",
       "holdEffectParam": 0,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to cure poison.",
@@ -2179,7 +2179,7 @@
     {
       "english": "RAWST BERRY",
       "itemId": "ITEM_RAWST_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CURE_BRN",
       "holdEffectParam": 0,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to heal a burn.",
@@ -2195,7 +2195,7 @@
     {
       "english": "ASPEAR BERRY",
       "itemId": "ITEM_ASPEAR_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CURE_FRZ",
       "holdEffectParam": 0,
       "description_english": "When held by a POKéMON, it will be\\nused in battle for defrosting.",
@@ -2211,7 +2211,7 @@
     {
       "english": "LEPPA BERRY",
       "itemId": "ITEM_LEPPA_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_RESTORE_PP",
       "holdEffectParam": 10,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to restore 10 PP.",
@@ -2227,7 +2227,7 @@
     {
       "english": "ORAN BERRY",
       "itemId": "ITEM_ORAN_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_RESTORE_HP",
       "holdEffectParam": 10,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to restore 10 HP.",
@@ -2243,7 +2243,7 @@
     {
       "english": "PERSIM BERRY",
       "itemId": "ITEM_PERSIM_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CURE_CONFUSION",
       "holdEffectParam": 0,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to lift confusion.",
@@ -2259,7 +2259,7 @@
     {
       "english": "LUM BERRY",
       "itemId": "ITEM_LUM_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CURE_STATUS",
       "holdEffectParam": 0,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to heal any problem.",
@@ -2275,7 +2275,7 @@
     {
       "english": "SITRUS BERRY",
       "itemId": "ITEM_SITRUS_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_RESTORE_HP",
       "holdEffectParam": 30,
       "description_english": "When held by a POKéMON, it will be\\nused in battle to restore 30 HP.",
@@ -2291,7 +2291,7 @@
     {
       "english": "FIGY BERRY",
       "itemId": "ITEM_FIGY_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CONFUSE_SPICY",
       "holdEffectParam": 8,
       "description_english": "A hold item that restores HP but\\nmay cause confusion when used.",
@@ -2307,7 +2307,7 @@
     {
       "english": "WIKI BERRY",
       "itemId": "ITEM_WIKI_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CONFUSE_DRY",
       "holdEffectParam": 8,
       "description_english": "A hold item that restores HP but\\nmay cause confusion when used.",
@@ -2323,7 +2323,7 @@
     {
       "english": "MAGO BERRY",
       "itemId": "ITEM_MAGO_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CONFUSE_SWEET",
       "holdEffectParam": 8,
       "description_english": "A hold item that restores HP but\\nmay cause confusion when used.",
@@ -2339,7 +2339,7 @@
     {
       "english": "AGUAV BERRY",
       "itemId": "ITEM_AGUAV_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CONFUSE_BITTER",
       "holdEffectParam": 8,
       "description_english": "A hold item that restores HP but\\nmay cause confusion when used.",
@@ -2355,7 +2355,7 @@
     {
       "english": "IAPAPA BERRY",
       "itemId": "ITEM_IAPAPA_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CONFUSE_SOUR",
       "holdEffectParam": 8,
       "description_english": "A hold item that restores HP but\\nmay cause confusion when used.",
@@ -2371,7 +2371,7 @@
     {
       "english": "RAZZ BERRY",
       "itemId": "ITEM_RAZZ_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2387,7 +2387,7 @@
     {
       "english": "BLUK BERRY",
       "itemId": "ITEM_BLUK_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2403,7 +2403,7 @@
     {
       "english": "NANAB BERRY",
       "itemId": "ITEM_NANAB_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2419,7 +2419,7 @@
     {
       "english": "WEPEAR BERRY",
       "itemId": "ITEM_WEPEAR_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2435,7 +2435,7 @@
     {
       "english": "PINAP BERRY",
       "itemId": "ITEM_PINAP_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2451,7 +2451,7 @@
     {
       "english": "POMEG BERRY",
       "itemId": "ITEM_POMEG_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2467,7 +2467,7 @@
     {
       "english": "KELPSY BERRY",
       "itemId": "ITEM_KELPSY_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2483,7 +2483,7 @@
     {
       "english": "QUALOT BERRY",
       "itemId": "ITEM_QUALOT_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2499,7 +2499,7 @@
     {
       "english": "HONDEW BERRY",
       "itemId": "ITEM_HONDEW_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2515,7 +2515,7 @@
     {
       "english": "GREPA BERRY",
       "itemId": "ITEM_GREPA_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2531,7 +2531,7 @@
     {
       "english": "TAMATO BERRY",
       "itemId": "ITEM_TAMATO_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2547,7 +2547,7 @@
     {
       "english": "CORNN BERRY",
       "itemId": "ITEM_CORNN_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2563,7 +2563,7 @@
     {
       "english": "MAGOST BERRY",
       "itemId": "ITEM_MAGOST_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2579,7 +2579,7 @@
     {
       "english": "RABUTA BERRY",
       "itemId": "ITEM_RABUTA_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2595,7 +2595,7 @@
     {
       "english": "NOMEL BERRY",
       "itemId": "ITEM_NOMEL_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2611,7 +2611,7 @@
     {
       "english": "SPELON BERRY",
       "itemId": "ITEM_SPELON_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2627,7 +2627,7 @@
     {
       "english": "PAMTRE BERRY",
       "itemId": "ITEM_PAMTRE_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2643,7 +2643,7 @@
     {
       "english": "WATMEL BERRY",
       "itemId": "ITEM_WATMEL_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2659,7 +2659,7 @@
     {
       "english": "DURIN BERRY",
       "itemId": "ITEM_DURIN_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2675,7 +2675,7 @@
     {
       "english": "BELUE BERRY",
       "itemId": "ITEM_BELUE_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
@@ -2691,7 +2691,7 @@
     {
       "english": "LIECHI BERRY",
       "itemId": "ITEM_LIECHI_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_ATTACK_UP",
       "holdEffectParam": 4,
       "description_english": "When held by a POKéMON, it raises\\nthe ATTACK stat in a pinch.",
@@ -2707,7 +2707,7 @@
     {
       "english": "GANLON BERRY",
       "itemId": "ITEM_GANLON_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_DEFENSE_UP",
       "holdEffectParam": 4,
       "description_english": "When held by a POKéMON, it raises\\nthe DEFENSE stat in a pinch.",
@@ -2723,7 +2723,7 @@
     {
       "english": "SALAC BERRY",
       "itemId": "ITEM_SALAC_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_SPEED_UP",
       "holdEffectParam": 4,
       "description_english": "When held by a POKéMON, it raises\\nthe SPEED stat in a pinch.",
@@ -2739,7 +2739,7 @@
     {
       "english": "PETAYA BERRY",
       "itemId": "ITEM_PETAYA_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_SP_ATTACK_UP",
       "holdEffectParam": 4,
       "description_english": "When held by a POKéMON, it raises\\nthe SP. ATK stat in a pinch.",
@@ -2755,7 +2755,7 @@
     {
       "english": "APICOT BERRY",
       "itemId": "ITEM_APICOT_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_SP_DEFENSE_UP",
       "holdEffectParam": 4,
       "description_english": "When held by a POKéMON, it raises\\nthe SP. DEF stat in a pinch.",
@@ -2771,7 +2771,7 @@
     {
       "english": "LANSAT BERRY",
       "itemId": "ITEM_LANSAT_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_CRITICAL_UP",
       "holdEffectParam": 4,
       "description_english": "When held by a POKéMON, it raises\\nthe critical-hit ratio in a pinch.",
@@ -2787,7 +2787,7 @@
     {
       "english": "STARF BERRY",
       "itemId": "ITEM_STARF_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_RANDOM_STAT_UP",
       "holdEffectParam": 4,
       "description_english": "When held by a POKéMON, it sharply\\nraises one stat in a pinch.",
@@ -2803,7 +2803,7 @@
     {
       "english": "ENIGMA BERRY",
       "itemId": "ITEM_ENIGMA_BERRY",
-      "price": 20,
+      "price": 200,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
       "description_english": "Can be ground up into a powder as\\nan ingredient for medicine.",
