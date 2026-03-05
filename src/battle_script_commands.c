@@ -3244,18 +3244,20 @@ static void Cmd_getexp(void)
                         gBattleMoveDamage = (gBattleMoveDamage / 2);
 					
                     if (holdEffect == HOLD_EFFECT_LUCKY_EGG)
-                        gBattleMoveDamage = (gBattleMoveDamage * 10);
+                        gBattleMoveDamage = (gBattleMoveDamage * 4);
+						i = STRINGID_ABOOSTED;
 					
                     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                         gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
 					
                     if (IsTradedMon(&gPlayerParty[gBattleStruct->expGetterMonId])
                      && !(gBattleTypeFlags & BATTLE_TYPE_POKEDUDE))
-				 
                     {
                         gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
                         i = STRINGID_ABOOSTED;
                     }
+                    else if (holdEffect == HOLD_EFFECT_LUCKY_EGG)
+						i = STRINGID_ABOOSTED;
                     else
                     {
                         i = STRINGID_EMPTYSTRING4;
